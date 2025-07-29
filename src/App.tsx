@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './App.css';
 
 type PieceType = 'king' | 'queen' | 'rook' | 'bishop' | 'knight' | 'pawn' | null;
 type PieceColor = 'white' | 'black';
@@ -150,6 +149,14 @@ function App() {
     if (isSelected) className += ' selected';
     if (isPossibleMove) className += ' possible-move';
 
+    const getPieceClassName = (piece: Piece) => {
+      let pieceClass = `piece ${piece.color}-piece ${piece.type}`;
+      if (piece.type === 'pawn') {
+        pieceClass += ` ${piece.color}-pawn`;
+      }
+      return pieceClass;
+    };
+
     return (
       <div
         key={`${row}-${col}`}
@@ -157,7 +164,7 @@ function App() {
         onClick={() => handleSquareClick(row, col)}
       >
         {piece && (
-          <span className="piece">
+          <span className={getPieceClassName(piece)}>
             {pieceSymbols[`${piece.color}-${piece.type}`]}
           </span>
         )}
@@ -167,15 +174,29 @@ function App() {
 
   return (
     <div className="chess-game">
-      <h1>♔ Chess Game ♛</h1>
+      <h1>♔ Royal Chess ♛</h1>
+      
       <div className="chess-board">
         {board.map((row, rowIndex) =>
           row.map((_, colIndex) => renderSquare(rowIndex, colIndex))
         )}
       </div>
+      
       <div className="game-info">
-        <div className="turn">Current Player: {currentPlayer === 'white' ? '♔ White' : '♛ Black'}</div>
+        <div className="turn">
+          Current Player: {currentPlayer === 'white' ? '♔ White Royalty' : '♛ Black Majesty'}
+        </div>
+        
+        <div className="game-subtitle">
+          Click a piece to see possible moves • Beautiful chess with royal pieces
+        </div>
       </div>
+      
+      {/* Decorative floating pieces */}
+      <div className="floating-piece top-left">♔</div>
+      <div className="floating-piece top-right">♛</div>
+      <div className="floating-piece bottom-left">♜</div>
+      <div className="floating-piece bottom-right">♞</div>
     </div>
   );
 }
