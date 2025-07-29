@@ -55,7 +55,7 @@ function App() {
           if (toRow === fromRow + direction && !board[toRow][toCol]) return true;
           if (fromRow === startRow && toRow === fromRow + 2 * direction && !board[toRow][toCol]) return true;
         } else if (colDiff === 1 && toRow === fromRow + direction) {
-          return board[toRow][toCol] && board[toRow][toCol]!.color !== piece.color;
+          return !!board[toRow][toCol] && board[toRow][toCol]!.color !== piece.color;
         }
         return false;
 
